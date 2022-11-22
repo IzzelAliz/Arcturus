@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group 'io.izzel'
+version '1.0-SNAPSHOT'
+
+sourceSets {
+    processor {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+        }
+    }
+    test {
+        java {
+            compileClasspath += processor.output
+            runtimeClasspath += processor.output
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    processorImplementation 'org.ow2.asm:asm-tree:9.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testAnnotationProcessor sourceSets.processor.output
+}
+
+test {
+    useJUnitPlatform()
+}
+
+compileProcessorJava {
+    options.compilerArgs += [
+            'api', 'tree', 'code', 'util', 'comp', 'jvm', 'resources'
+    ].collect { "--add-exports=jdk.compiler/com.sun.tools.javac.$it=ALL-UNNAMED".toString() }
+}
+
+compileTestJava {
+    outputs.upToDateWhen { false }
+}
