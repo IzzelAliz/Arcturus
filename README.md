@@ -15,9 +15,13 @@ public class UltimateAnswer {
   }
 
   private static final Intrinsic ANSWER = new Intrinsic(
-    "test",
+    "answer",
     (lookup, methodType, args) -> {
-      MethodHandle handle = MethodHandles.dropArguments(MethodHandles.constant(int.class, 42), 0, methodType.parameterList());
+      MethodHandle handle = MethodHandles.dropArguments(
+        MethodHandles.constant(int.class, 42),
+        0,
+        methodType.parameterList()
+      );
       return new ConstantCallSite(handle);
     });
 
