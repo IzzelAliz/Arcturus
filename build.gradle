@@ -1,21 +1,17 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'io.izzel'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 sourceSets {
-    processor {
+    processor {}
+    test {
         java {
             compileClasspath += main.output
             runtimeClasspath += main.output
-        }
-    }
-    test {
-        java {
-            compileClasspath += processor.output
-            runtimeClasspath += processor.output
         }
     }
 }
@@ -25,7 +21,6 @@ repositories {
 }
 
 dependencies {
-    processorImplementation 'org.ow2.asm:asm-tree:9.4'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
     testAnnotationProcessor sourceSets.processor.output
@@ -43,4 +38,28 @@ compileProcessorJava {
 
 compileTestJava {
     outputs.upToDateWhen { false }
+}
+
+task processorJar(type: Jar) {
+    from sourceSets.processor.output
+    classifier = 'processor'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "IzzelAliz"
+            url = uri("https://maven.izzel.io/releases")
+            credentials {
+                username = project.findProperty("arcturus.user") ?: System.getenv("ARCTURUS_USERNAME")
+                password = project.findProperty("arcturus.key") ?: System.getenv("ARCTURUS_TOKEN")
+            }
+        }
+    }
+    publications {
+        arcturus(MavenPublication) {
+            from(components.java)
+            artifact processorJar
+        }
+    }
 }

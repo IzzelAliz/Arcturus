@@ -39,6 +39,20 @@ The call to `getAnswer` is translated to a `invokedynamic` call using `ANSWER` a
 
 Please refer to test sources for more details.
 
+### Gradle
+
+![](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fmaven.izzel.io%2Freleases%2Fio%2Fizzel%2Farcturus%2Fmaven-metadata.xml&style=flat-square)
+
+```groovy
+repositories {
+  maven { url 'https://maven.izzel.io/releases' }
+}
+dependencies {
+  implementation 'io.izzel:arcturus:VERSION'
+  annotationProcessor 'io.izzel:arcturus:VERSION:processor'
+}
+```
+
 ## License
 
 This project is licensed under the MIT License.

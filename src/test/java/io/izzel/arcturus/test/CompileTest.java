@@ -53,6 +53,8 @@ public class CompileTest {
         throw new RuntimeException();
     }
 
+    private static final Intrinsic INTRINSIC = UltimateAnswer.ANSWER;
+
     public static class Test {
 
         @Intrinsic.Link(value = "INTRINSIC", owner = CompileTest.class)
@@ -70,7 +72,7 @@ class UltimateAnswer {
         System.out.println(i);
     }
 
-    private static final Intrinsic ANSWER = new Intrinsic("test", (lookup, methodType, args) -> {
+    static final Intrinsic ANSWER = new Intrinsic("test", (lookup, methodType, args) -> {
         MethodHandle handle = MethodHandles.dropArguments(MethodHandles.constant(int.class, 42), 0, methodType.parameterList());
         return new ConstantCallSite(handle);
     });
