@@ -35,6 +35,8 @@ public class ArcturusPlugin implements Plugin, TaskListener {
         }
         if (e.getKind() == TaskEvent.Kind.ANALYZE) {
             e.getCompilationUnit().accept(new IntrinsicLink(this.context, e.getSourceFile()), null);
+            var tailCalls = new TailCallTransform(this.context);
+            tailCalls.accept(e.getCompilationUnit());
         }
     }
 

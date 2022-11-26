@@ -36,6 +36,7 @@ public class ArcturusTypes {
         link = typeOf("io.izzel.arcturus.api.Intrinsic$Link");
         intrinsic = typeOf("io.izzel.arcturus.api.Intrinsic");
         inline = typeOf("io.izzel.arcturus.api.Inline");
+        tailrec = typeOf("io.izzel.arcturus.api.Tailrec");
         //specialized = typeOf(Specialized.class);
         linkValue = nameOf("value");
         linkOwner = nameOf("owner");
@@ -59,6 +60,7 @@ public class ArcturusTypes {
     public final Type link;
     public final Type intrinsic;
     public final Type inline;
+    public final Type tailrec;
 
     public final Name linkValue;
     public final Name linkOwner;
